@@ -1,0 +1,282 @@
+/* Example 4: the portrait with notes.
+   His real portrait, cut out with scissors, on sheets of colored paper, with notes in pen.
+   The inner pages are made the same way: a drawing on a sheet of cut paper, notes in pen.
+   Bitter for what he says, a pen face for the notes. */
+
+@font-face {
+  font-family: "Bitter";
+  src: url("fonts/bitter-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Reenie Beanie";
+  src: url("fonts/reenie-beanie-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --ground: #0f3a35;
+  --yellow: #ffd65c;
+  --coral: #ff7a57;
+  --cream: #eef3e4;
+  --ink: #12211e;
+  --print: #faf8f2;
+  --pen: 400 31px/0.95 "Reenie Beanie", "Bradley Hand", cursive;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--ground); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 40px 32px;
+  background: var(--ground);
+  color: var(--cream);
+  font: 400 19px/1.55 "Bitter", Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 540px minmax(0, 540px);
+  column-gap: 176px;
+  align-items: center;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.24em;
+  text-decoration-color: var(--coral);
+}
+a:hover { color: var(--yellow); }
+a:focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; border-radius: 2px; }
+
+::selection { background: var(--yellow); color: var(--ground); }
+
+p { margin: 0 0 0.9em; text-wrap: pretty; }
+
+/* A drawing is a mask: the page gives it its ink. */
+.ink {
+  display: block;
+  width: 100%;
+  background: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.links {
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  font-weight: 600;
+  font-size: 17px;
+}
+.links a { display: inline-block; padding: 4px 0; }
+
+/* ---- the home page --------------------------------------------------------------------- */
+
+.me { position: relative; width: 540px; height: 540px; }
+.me svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.sheet-b path { fill: var(--coral); }
+.portrait { position: absolute; left: 2%; top: 13%; width: 96%; height: auto; }
+.pen path { fill: none; stroke: var(--cream); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+.note { position: absolute; margin: 0; font: var(--pen); color: var(--cream); white-space: nowrap; }
+.note a { text-decoration-thickness: 1.5px; text-underline-offset: 0.16em; }
+.note.one { left: -8px; top: 4px; transform: rotate(-5deg); }
+.note.two { left: 556px; top: 236px; transform: rotate(3deg); white-space: normal; width: 104px; }
+.note.three { left: 112px; bottom: -2px; transform: rotate(-3deg); }
+
+/* an old print of him as a child, next to the note about the age of five */
+.print {
+  position: absolute;
+  left: -2px;
+  bottom: -18px;
+  width: 92px;
+  height: auto;
+  border: 5px solid var(--print);
+  border-bottom-width: 14px;
+  transform: rotate(-7deg);
+}
+
+.claim {
+  margin: 0;
+  color: var(--yellow);
+  font-weight: 800;
+  font-size: 70px;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.who { margin: 26px 0 0; text-wrap: pretty; }
+.who h1 { display: inline; margin: 0; font-size: inherit; font-weight: 700; }
+
+/* ---- the inner pages ------------------------------------------------------------------- */
+
+.inner main { grid-template-columns: minmax(0, 30em) minmax(0, 520px); column-gap: 96px; }
+
+.inner h1 {
+  margin: 0 0 0.45em;
+  color: var(--yellow);
+  font-weight: 800;
+  font-size: 62px;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+figure { margin: 0; }
+.figures { display: grid; row-gap: 40px; }
+
+/* a sheet of colored paper, cut by hand: no two corners are square */
+.paper {
+  padding: 38px 40px 34px;
+  color: var(--ink);
+  clip-path: polygon(1.5% 3%, 97% 0, 100% 95.5%, 3.5% 100%);
+  transform: rotate(-1.4deg);
+}
+.paper.yellow { background: var(--yellow); }
+.paper.coral { background: var(--coral); transform: rotate(1.2deg); clip-path: polygon(0 1.5%, 98.5% 3.5%, 96.5% 100%, 2% 97%); }
+.paper.tall { width: 62%; margin: 0 auto; padding: 30px 60px 26px; }
+.bare { color: var(--cream); }
+
+figcaption { margin-top: 6px; font: var(--pen); font-size: 27px; color: var(--cream); transform: rotate(-1deg); }
+
+.chairs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin: 2px 0 0;
+  padding: 0 5%;
+  list-style: none;
+  font: var(--pen);
+  font-size: 24px;
+  text-align: center;
+}
+.chairs li:nth-child(even) { padding-top: 0.9em; }
+
+.answers { position: relative; }
+.answers .ink { width: 72%; }
+.answers ul { margin: 0; padding: 0; list-style: none; font: var(--pen); font-size: 27px; }
+.answers li { position: absolute; left: 70%; white-space: nowrap; transform: translateY(-50%) rotate(-2deg); }
+.answers li:nth-child(1) { top: 21%; }
+.answers li:nth-child(2) { top: 50%; }
+.answers li:nth-child(3) { top: 77%; }
+
+.line { position: relative; height: 3.4em; font: var(--pen); font-size: 27px; }
+.line::before { content: ""; position: absolute; left: 0; right: 0; top: 0.5em; border-top: 2px solid var(--cream); }
+.line span { position: absolute; top: 0; padding-top: 0.9em; white-space: nowrap; }
+.line span::before { content: ""; position: absolute; left: 0; top: 0.1em; height: 0.8em; border-left: 2px solid var(--cream); }
+.line .k1 { left: 0.6%; padding-top: 1.9em; }
+.line .k1::before { height: 1.9em; }
+.line .k10 { left: 6.25%; }
+.line .k160 { right: 0; text-align: right; }
+.line .k160::before { left: auto; right: 0; }
+
+.credits { display: grid; grid-template-columns: auto 1fr; gap: 2px 20px; margin: 0 0 0.9em; }
+.credits dt { font-weight: 700; color: var(--yellow); }
+.credits dd { margin: 0; }
+
+/* ---- smaller screens ------------------------------------------------------------------- */
+
+@media (max-width: 1240px) {
+  main { grid-template-columns: 420px minmax(0, 1fr); column-gap: 150px; }
+  .me { width: 420px; height: 420px; }
+  .note { font-size: 27px; }
+  .note.two { left: 432px; top: 176px; width: 92px; }
+  .note.three { left: 96px; }
+  .print { width: 76px; }
+  .claim { font-size: 56px; }
+  .inner main { column-gap: 64px; }
+  .inner h1 { font-size: 52px; }
+}
+
+@media (max-width: 900px) {
+  body { padding: 28px 24px 40px; place-items: start center; font-size: 18px; }
+  main, .inner main { grid-template-columns: minmax(0, 1fr); row-gap: 34px; justify-items: start; }
+  .me { width: 300px; height: 300px; margin: 6px 0 40px 0; }
+  .note { font-size: 23px; }
+  .note.one { left: -2px; top: -6px; }
+  .note.two { left: 292px; top: 120px; width: 70px; line-height: 0.9; }
+  .note.three { left: 78px; bottom: -34px; }
+  .print { width: 62px; border-width: 4px; border-bottom-width: 10px; bottom: -44px; }
+  .claim { font-size: 46px; }
+  .who { margin-top: 18px; }
+  .links { margin-top: 22px; gap: 0 22px; }
+  .links a { padding: 8px 0; }
+  .inner h1 { font-size: 44px; }
+  .inner figure, .figures { width: 100%; }
+  .paper { padding: 26px 22px 24px; }
+  .paper.tall { width: 70%; padding: 22px 40px 20px; }
+  .chairs { font-size: 19px; padding: 0 3%; }
+  .answers ul { font-size: 22px; }
+  .answers li { left: 69%; }
+  .answers .ink { width: 68%; }
+  .line, figcaption { font-size: 23px; }
+  .credits { grid-template-columns: 1fr; gap: 0; }
+  .credits dd { margin-bottom: 8px; }
+}
+
+/* ---- round 3: a marker pen over the key phrases, the long line with two arrows ------------- */
+
+mark {
+  background: var(--yellow);
+  color: var(--ink);
+  padding: 0.04em 0.24em;
+  margin: 0 -0.08em;
+  border-radius: 0.35em 0.7em 0.3em 0.8em / 0.7em 0.35em 0.8em 0.4em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.line { height: 7.2em; }
+.line::before { top: 4.1em; }
+.line > span { top: 3.6em; }
+.line .k30 { left: 18.75%; }
+.line .k1 { padding-top: 0.9em; }
+.line .k1::before { height: 0.8em; }
+.line .note-line { top: 0; padding: 0; text-align: center; transform: translateX(-50%); }
+.line .note-line::before { display: none; }
+.line .note-line svg { display: block; margin: 0.1em auto 0; width: 0.6em; height: 2em; overflow: visible; }
+.line .note-line path { fill: none; stroke: var(--cream); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.line .longest { left: 18.75%; }
+.line .goal { left: 100%; transform: translateX(-100%); text-align: right; }
+.line .goal svg { margin-left: auto; margin-right: 0; transform: translateX(0.3em); }
+
+/* ---- the Nexus dive: the seven page and a page per repo --------------------------------- */
+
+.parts { margin-bottom: 1.2em; }
+.parts dt { white-space: nowrap; }
+.parts dt a { display: inline-block; padding: 3px 0; margin: -3px 0; }
+.parts.doodled dt { display: flex; align-items: center; gap: 14px; }
+.parts .mini { width: 42px; height: 42px; flex: none; }
+
+.map { position: relative; margin: 0; }
+.map svg { display: block; width: 100%; height: auto; }
+.map .tag { position: absolute; margin: 0; font: var(--pen); font-size: 25px; white-space: nowrap; transform: translate(-50%, 0); }
+.map .tag.above { transform: translate(-50%, -100%); }
+.map .tag.left { transform: translate(-100%, -50%); }
+.map .tag.right { transform: translate(0, -50%); }
+.paper .map { color: var(--ink); }
+.paper.doodle .ink { width: 44%; margin: 0 auto; }
+.paper.wide { grid-column: 1 / -1; margin-top: 44px; }
+
+@media (max-width: 900px) {
+  .map .tag { font-size: 20px; }
+  .parts .mini { width: 34px; height: 34px; }
+  .paper.wide { margin-top: 0; }
+}
